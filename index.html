@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bengkel Modul Ajar TEFA — SMKN 12 Surabaya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --indigo:#2b3a55;
+  --indigo-deep:#1c2740;
+  --kraft:#efe6d3;
+  --kraft-dark:#e2d5b8;
+  --paper:#faf6ee;
+  --terracotta:#c15f3c;
+  --ochre:#c99a3d;
+  --ink:#211d16;
+  --ink-soft:#5a5346;
+  --line:#d8c9a3;
+  --ok:#4c7a5a;
+  --radius:6px;
+  --shadow: 0 1px 0 rgba(33,29,22,.05), 0 8px 20px -12px rgba(33,29,22,.25);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--kraft);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(33,29,22,.05) 1px, transparent 0);
+  background-size: 22px 22px;
+  color:var(--ink);
+  font-family:'Work Sans', sans-serif;
+  min-height:100vh;
+}
+h1,h2,h3,.display{font-family:'Fraunces', serif;}
+.mono{font-family:'JetBrains Mono', monospace;}
+
+/* ===== HEADER ===== */
+.topbar{
+  background:var(--indigo);
+  color:var(--paper);
+  padding:22px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  border-bottom:4px solid var(--terracotta);
+}
+.brand{display:flex;align-items:center;gap:14px;}
+.brand-mark{
+  width:46px;height:46px;border-radius:50%;
+  background:var(--paper);
+  object-fit:contain;
+  border:2px solid var(--ochre);
+  flex-shrink:0;
+  padding:3px;
+}
+.brand-text h1{margin:0;font-size:20px;font-weight:600;letter-spacing:.2px;line-height:1.2;}
+.brand-text p{margin:2px 0 0;font-size:12.5px;color:#c9d0dd;font-family:'JetBrains Mono',monospace;letter-spacing:.3px;}
+.topbar-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  border:1px solid rgba(255,255,255,.3);
+  padding:6px 12px;
+  border-radius:20px;
+  color:#e9dfc7;
+  white-space:nowrap;
+}
+
+/* ===== LAYOUT ===== */
+.app{
+  max-width:1180px;
+  margin:0 auto;
+  padding:28px 20px 80px;
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:26px;
+  align-items:start;
+}
+@media (max-width:880px){
+  .app{grid-template-columns:1fr;}
+}
+
+/* ===== STEPPER (kartu produksi) ===== */
+.docket{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px 16px;
+  position:sticky;
+  top:20px;
+}
+.docket-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  margin:0 0 14px;
+  padding-bottom:10px;
+  border-bottom:1px dashed var(--line);
+}
+.step-item{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:10px 8px;
+  border-radius:5px;
+  cursor:pointer;
+  margin-bottom:2px;
+  transition:background .15s;
+}
+.step-item:hover{background:var(--kraft-dark);}
+.step-item.active{background:var(--indigo);}
+.step-item.active .step-label,.step-item.active .step-sub{color:var(--paper);}
+.step-num{
+  width:24px;height:24px;border-radius:50%;
+  border:1.5px solid var(--ink-soft);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  flex-shrink:0;
+}
+.step-item.active .step-num{border-color:var(--ochre);color:var(--ochre);}
+.step-item.done .step-num{background:var(--ok);border-color:var(--ok);color:#fff;}
+.step-label{font-size:13.5px;font-weight:600;display:block;}
+.step-sub{font-size:11px;color:var(--ink-soft);}
+
+/* ===== MAIN PANEL ===== */
+.panel{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+}
+.panel-head{
+  padding:22px 30px 16px;
+  border-bottom:1px dashed var(--line);
+}
+.panel-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--terracotta); margin:0 0 6px;
+}
+.panel-head h2{margin:0;font-size:24px;font-weight:600;color:var(--indigo-deep);}
+.panel-head p{margin:8px 0 0;color:var(--ink-soft);font-size:14px;max-width:640px;line-height:1.5;}
+.panel-body{padding:24px 30px 30px;flex:1;}
+.panel-foot{
+  padding:16px 30px;
+  border-top:1px dashed var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;flex-wrap:wrap;
+}
+
+/* form elements */
+.field{margin-bottom:18px;}
+.field label{
+  display:block;font-size:12.5px;font-weight:600;color:var(--ink);
+  margin-bottom:6px;letter-spacing:.2px;
+}
+.field .hint{font-size:11.5px;color:var(--ink-soft);margin-top:4px;line-height:1.4;}
+input[type=text],input[type=number],select,textarea{
+  width:100%;
+  font-family:'Work Sans',sans-serif;
+  font-size:14px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:4px;
+  background:#fff;
+  color:var(--ink);
+  resize:vertical;
+}
+textarea{min-height:70px;line-height:1.5;}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid var(--ochre);outline-offset:1px;border-color:var(--ochre);
+}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+@media (max-width:640px){.row2,.row3{grid-template-columns:1fr;}}
+
+/* jurusan grid */
+.jurusan-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:10px;
+  margin-top:6px;
+}
+.jurusan-card{
+  border:1.5px solid var(--line);
+  background:#fff;
+  border-radius:5px;
+  padding:12px 12px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.jurusan-card:hover{border-color:var(--ochre);}
+.jurusan-card.selected{
+  border-color:var(--indigo);
+  background:var(--indigo);
+}
+.jurusan-card.selected .j-name{color:var(--paper);}
+.jurusan-card.selected .j-tag{color:#c9d0dd;}
+.j-name{font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;display:block;}
+.j-tag{font-size:11px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;}
+
+/* checkbox pills */
+.pill-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.pill{
+  border:1.5px solid var(--line);
+  border-radius:20px;
+  padding:7px 14px;
+  font-size:12.5px;
+  cursor:pointer;
+  background:#fff;
+  user-select:none;
+}
+.pill.active{background:var(--terracotta);border-color:var(--terracotta);color:#fff;}
+
+/* dynamic list */
+.list-editor .list-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start;}
+.list-editor .list-row textarea{flex:1;min-height:44px;}
+.list-editor .rm-btn{
+  background:none;border:1px solid var(--line);border-radius:4px;
+  width:34px;height:34px;flex-shrink:0;cursor:pointer;color:var(--terracotta);font-size:16px;line-height:1;
+}
+.add-btn{
+  border:1px dashed var(--ink-soft);
+  background:none;border-radius:4px;
+  padding:8px 14px;font-size:12.5px;cursor:pointer;color:var(--ink-soft);
+  font-family:'JetBrains Mono',monospace;
+}
+.add-btn:hover{border-color:var(--indigo);color:var(--indigo);}
+
+/* buttons */
+.btn{
+  font-family:'Work Sans',sans-serif;
+  font-weight:600;font-size:13.5px;
+  padding:11px 20px;
+  border-radius:4px;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:var(--indigo);color:var(--paper);}
+.btn-primary:hover{background:var(--indigo-deep);}
+.btn-ghost{background:none;color:var(--ink-soft);border:1px solid var(--line);}
+.btn-ghost:hover{border-color:var(--ink-soft);color:var(--ink);}
+.btn-generate{background:var(--terracotta);color:#fff;font-size:15px;padding:14px 26px;}
+.btn-generate:hover{background:#a54e30;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* tahapan cards */
+.stage{
+  border:1px solid var(--line);
+  border-left:4px solid var(--ochre);
+  border-radius:4px;
+  padding:16px 18px;
+  margin-bottom:14px;
+  background:#fff;
+}
+.stage-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.stage-head h4{margin:0;font-family:'Fraunces',serif;font-size:16px;color:var(--indigo-deep);}
+.stage-head span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);}
+
+/* rubrik table */
+.rubrik-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;}
+.rubrik-table th,.rubrik-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+.rubrik-table th{background:var(--kraft-dark);font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* progress dots on footer */
+.progress-track{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-soft);}
+
+/* toast */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:var(--indigo-deep);color:var(--paper);
+  padding:14px 22px;border-radius:6px;font-size:13.5px;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;
+  z-index:50;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+.toast .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex-shrink:0;}
+
+.note-box{
+  background:var(--kraft-dark);
+  border:1px dashed var(--ink-soft);
+  border-radius:5px;
+  padding:12px 14px;
+  font-size:12.5px;
+  color:var(--ink-soft);
+  margin-top:10px;
+  line-height:1.5;
+}
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--indigo);
+  margin:26px 0 10px;
+  padding-top:16px;
+  border-top:1px dashed var(--line);
+}
+.section-label:first-child{margin-top:0;border-top:none;padding-top:0;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <img class="brand-mark" src="data:image/png;base64,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" alt="Logo SMK Negeri 12 Surabaya">
+    <div class="brand-text">
+      <h1>Bengkel Modul Ajar TEFA</h1>
+      <p>SMKN 12 SURABAYA — SEKOLAH SENI &amp; KRIYA</p>
+    </div>
+  </div>
+  <div class="topbar-tag">Kurikulum Merdeka · Berbasis Teaching Factory</div>
+</div>
+
+<div class="app">
+
+  <!-- STEPPER -->
+  <div class="docket">
+    <p class="docket-title">Kartu Produksi Modul</p>
+    <div id="stepper"></div>
+  </div>
+
+  <!-- MAIN PANEL -->
+  <div class="panel">
+    <div class="panel-head">
+      <p class="panel-eyebrow" id="panel-eyebrow">Tahap 1 / 6</p>
+      <h2 id="panel-title">Identitas &amp; Jurusan</h2>
+      <p id="panel-desc">Tentukan jurusan dan identitas dasar modul ajar.</p>
+    </div>
+    <div class="panel-body" id="panel-body"></div>
+    <div class="panel-foot">
+      <button class="btn btn-ghost" id="btn-prev">← Kembali</button>
+      <span class="progress-track" id="progress-track">Langkah 1 dari 6</span>
+      <button class="btn btn-primary" id="btn-next">Lanjut →</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"><span class="dot"></span><span id="toast-text">Tersimpan</span></div>
+
+<script>
+/* ================= DATA JURUSAN ================= */
+const JURUSAN = [
+  { id:"pedalangan", nama:"Seni Pedalangan", tag:"PANGGUNG & TRADISI",
+    cp:"Peserta didik mampu memahami, memperagakan, dan mementaskan lakon wayang (kulit/golek) meliputi teknik sabet, antawecana, catur, dan iringan karawitan pakeliran, serta mengelola pergelaran wayang secara profesional sesuai kaidah pedalangan.",
+    kompetensiAwal:"Peserta didik telah mengenal dasar tokoh dan cerita pewayangan serta dasar olah vokal/antawecana.",
+    sarana:"Gedung pendopo/panggung pergelaran, seperangkat wayang kulit/golek, kelir dan blencong, gamelan pengiring, sound system, properti dalang",
+    produk:"pergelaran wayang kulit/golek untuk acara hajatan, sekolah, atau instansi, beserta dokumentasi audio-visual pertunjukan",
+    mitra:"panitia hajatan masyarakat, sanggar budaya, dinas kebudayaan, dan sekolah mitra",
+    tujuan:[
+      "Peserta didik mampu merancang dan menyusun naskah lakon wayang sesuai pesanan pelanggan.",
+      "Peserta didik mampu mementaskan lakon wayang dengan teknik sabet, antawecana, dan catur yang tepat.",
+      "Peserta didik mampu bekerja sama dengan niyaga (pengrawit) dalam produksi pergelaran wayang."
+    ],
+    pemahaman:"Pergelaran wayang bukan sekadar pertunjukan, tetapi produk budaya bernilai jual yang harus memenuhi kebutuhan dan kepuasan pemesan.",
+    pemantik:["Apa yang membedakan pergelaran wayang untuk hajatan dengan pergelaran untuk festival budaya?","Bagaimana seorang dalang memastikan pesanan pelanggan terpenuhi dengan tetap menjaga pakem tradisi?"]
+  },
+  { id:"musik", nama:"Seni Musik", tag:"AUDIO & PERTUNJUKAN",
+    cp:"Peserta didik mampu memainkan alat musik, membaca notasi, mengaransemen lagu, serta memproduksi rekaman audio secara profesional untuk kebutuhan industri kreatif dan pertunjukan.",
+    kompetensiAwal:"Peserta didik telah menguasai dasar teori musik dan mampu memainkan minimal satu alat musik.",
+    sarana:"Studio musik/ruang kedap suara, alat musik (piano, gitar, drum, alat musik daerah), sound system dan mixer, software recording (DAW), instrumen digital",
+    produk:"jasa pengisian musik/live music untuk acara, aransemen lagu pesanan, dan rekaman musik (single/jingle)",
+    mitra:"event organizer (EO), UMKM, sekolah, dan instansi pemerintah",
+    tujuan:[
+      "Peserta didik mampu mengaransemen lagu sesuai kebutuhan dan karakter pelanggan.",
+      "Peserta didik mampu memproduksi rekaman audio dengan standar kualitas industri.",
+      "Peserta didik mampu tampil secara profesional dalam pertunjukan musik pesanan."
+    ],
+    pemahaman:"Musik yang diproduksi secara profesional harus mempertimbangkan selera pasar dan kebutuhan pemesan tanpa mengorbankan kualitas artistik.",
+    pemantik:["Bagaimana membuat aransemen musik yang sesuai selera pelanggan namun tetap orisinal?","Apa saja standar kualitas rekaman yang dibutuhkan industri musik saat ini?"]
+  },
+  { id:"teater", nama:"Seni Teater", tag:"PANGGUNG & AKTING",
+    cp:"Peserta didik mampu merancang naskah, memerankan tokoh, dan memproduksi pertunjukan teater secara kolaboratif sesuai kebutuhan pemesan atau penyelenggara acara.",
+    kompetensiAwal:"Peserta didik telah memahami dasar olah tubuh, olah vokal, dan olah rasa dalam berakting.",
+    sarana:"Panggung/black box theater, tata lampu dan tata suara panggung, properti dan kostum pementasan, ruang latihan (studio akting)",
+    produk:"pertunjukan teater pesanan untuk acara sekolah/komunitas dan produksi drama musikal",
+    mitra:"sekolah, komunitas seni, dan dinas pendidikan/kebudayaan",
+    tujuan:[
+      "Peserta didik mampu menyusun naskah dan konsep pertunjukan sesuai tema pesanan.",
+      "Peserta didik mampu memerankan tokoh secara meyakinkan dalam produksi teater.",
+      "Peserta didik mampu mengelola produksi pertunjukan dari latihan hingga pementasan."
+    ],
+    pemahaman:"Produksi teater adalah kerja kolektif yang menuntut disiplin, kerja sama tim, dan tanggung jawab terhadap hasil akhir pertunjukan.",
+    pemantik:["Bagaimana tim produksi teater memastikan pertunjukan sesuai permintaan penyelenggara acara?","Apa peran sutradara dalam menjaga kualitas artistik sekaligus memenuhi tenggat produksi?"]
+  },
+  { id:"tari", nama:"Seni Tari", tag:"GERAK & KOREOGRAFI",
+    cp:"Peserta didik mampu menciptakan koreografi, menguasai teknik tari tradisi dan kreasi, serta menampilkan karya tari secara profesional untuk berbagai acara.",
+    kompetensiAwal:"Peserta didik telah menguasai teknik dasar tari (sikap, gerak, dan ekspresi) sesuai gaya tari yang dipelajari.",
+    sarana:"Studio tari berlantai kayu (dance floor), cermin dinding, sound system, kostum dan properti tari, ruang ganti",
+    produk:"koreografi dan penampilan tari untuk acara resepsi, festival budaya, dan penyambutan tamu",
+    mitra:"EO pernikahan, sanggar tari, dinas pariwisata, dan sekolah",
+    tujuan:[
+      "Peserta didik mampu merancang koreografi sesuai tema dan durasi yang dipesan.",
+      "Peserta didik mampu menampilkan tari dengan teknik dan penghayatan yang baik.",
+      "Peserta didik mampu berkoordinasi dengan tim produksi (musik, kostum, tata panggung)."
+    ],
+    pemahaman:"Karya tari yang baik menyeimbangkan nilai estetika, pakem tradisi, dan kebutuhan spesifik acara pemesan.",
+    pemantik:["Bagaimana menyesuaikan durasi dan tema tari dengan permintaan klien tanpa mengurangi kualitas karya?","Apa tantangan menampilkan tari tradisi di acara modern?"]
+  },
+  { id:"karawitan", nama:"Seni Karawitan", tag:"GAMELAN & IRINGAN",
+    cp:"Peserta didik mampu memainkan instrumen gamelan, membaca notasi karawitan, dan menyajikan iringan karawitan untuk berbagai kebutuhan seni pertunjukan dan upacara adat.",
+    kompetensiAwal:"Peserta didik telah mengenal ricikan gamelan dan mampu memainkan minimal satu instrumen dasar.",
+    sarana:"Seperangkat gamelan (Jawa/Bali sesuai kekhasan daerah), pendopo latihan, sound system, ruang penyimpanan instrumen",
+    produk:"pengiring musik gamelan untuk acara adat, pergelaran wayang, tari, dan resepsi",
+    mitra:"sanggar budaya, paguyuban masyarakat, dan EO pernikahan adat",
+    tujuan:[
+      "Peserta didik mampu menyajikan gending sesuai kebutuhan acara yang dipesan.",
+      "Peserta didik mampu bekerja sama sebagai niyaga dalam ansambel karawitan.",
+      "Peserta didik mampu memelihara dan menyetem instrumen gamelan dengan benar."
+    ],
+    pemahaman:"Karawitan adalah seni kolektif yang menuntut keselarasan rasa dan kerja sama antaranggota ansambel.",
+    pemantik:["Bagaimana ansambel karawitan menjaga keselarasan saat mengiringi acara yang berbeda-beda?","Mengapa kekompakan menjadi kunci utama dalam sajian karawitan?"]
+  },
+  { id:"dkv", nama:"Desain Komunikasi Visual", tag:"BRANDING & VISUAL",
+    cp:"Peserta didik mampu merancang identitas visual, media promosi, dan komunikasi visual lain secara profesional menggunakan perangkat lunak desain sesuai kebutuhan klien.",
+    kompetensiAwal:"Peserta didik telah memahami dasar tipografi, warna, dan komposisi, serta pengoperasian dasar software desain.",
+    sarana:"Laboratorium komputer desain, software desain grafis (Adobe Creative Suite/CorelDraw), printer dan mesin cetak, tablet grafis, kamera fotografi",
+    produk:"desain logo, identitas merek (branding), dan media promosi (poster, banner, kemasan) untuk UMKM/instansi",
+    mitra:"UMKM lokal, koperasi sekolah, dan instansi pemerintah",
+    tujuan:[
+      "Peserta didik mampu menganalisis brief desain dari klien secara tepat.",
+      "Peserta didik mampu merancang identitas visual yang sesuai karakter brand klien.",
+      "Peserta didik mampu memproduksi file desain siap cetak/siap unggah sesuai standar industri."
+    ],
+    pemahaman:"Desain yang efektif menerjemahkan kebutuhan komunikasi klien menjadi visual yang tepat sasaran, bukan sekadar indah secara estetika.",
+    pemantik:["Bagaimana desainer menerjemahkan keinginan klien yang abstrak menjadi konsep visual yang konkret?","Apa yang membedakan desain untuk portofolio pribadi dengan desain untuk pesanan klien?"]
+  },
+  { id:"animasi", nama:"Animasi", tag:"GERAK DIGITAL",
+    cp:"Peserta didik mampu memproduksi karya animasi 2D/3D mulai dari praproduksi, produksi, hingga pascaproduksi sesuai standar industri animasi dan kebutuhan klien.",
+    kompetensiAwal:"Peserta didik telah memahami prinsip dasar animasi dan pengoperasian dasar software animasi.",
+    sarana:"Laboratorium komputer animasi, software animasi 2D/3D (Toon Boom, Blender, Adobe Animate), tablet grafis, komputer/render dengan spesifikasi tinggi",
+    produk:"iklan animasi pendek, motion graphic, dan konten animasi edukasi pesanan klien",
+    mitra:"UMKM, instansi pendidikan, dan rumah produksi lokal",
+    tujuan:[
+      "Peserta didik mampu menyusun storyboard sesuai brief klien.",
+      "Peserta didik mampu memproduksi animasi dengan alur kerja praproduksi-produksi-pascaproduksi.",
+      "Peserta didik mampu melakukan rendering dan penyuntingan akhir sesuai format pesanan."
+    ],
+    pemahaman:"Produksi animasi profesional menuntut kedisiplinan alur kerja tim dan konsistensi kualitas visual dari awal hingga akhir proyek.",
+    pemantik:["Mengapa storyboard menjadi tahap krusial sebelum animasi diproduksi?","Bagaimana tim animasi bekerja sama agar hasil akhir konsisten meski dikerjakan oleh banyak orang?"]
+  },
+  { id:"pplg", nama:"Pengembangan Perangkat Lunak & Gim", tag:"KODE & APLIKASI",
+    cp:"Peserta didik mampu menganalisis kebutuhan, merancang, membangun, menguji, dan menerapkan perangkat lunak atau gim sesuai kebutuhan pengguna/klien menggunakan metodologi pengembangan yang tepat.",
+    kompetensiAwal:"Peserta didik telah memahami dasar logika pemrograman dan alur pengembangan perangkat lunak.",
+    sarana:"Laboratorium komputer/RPL, jaringan internet, software pengembangan (IDE/code editor), server/hosting untuk deployment, perangkat pengembangan game engine",
+    produk:"aplikasi/website pesanan (company profile, sistem informasi sederhana) dan game edukasi",
+    mitra:"UMKM, koperasi sekolah, dan instansi mitra industri IT",
+    tujuan:[
+      "Peserta didik mampu menganalisis kebutuhan sistem dari klien dan menyusun spesifikasi teknis.",
+      "Peserta didik mampu membangun perangkat lunak/gim sesuai spesifikasi menggunakan metodologi pengembangan yang sesuai.",
+      "Peserta didik mampu menguji, mendokumentasikan, dan menerapkan (deploy) hasil pengembangan."
+    ],
+    pemahaman:"Perangkat lunak yang baik lahir dari pemahaman kebutuhan pengguna yang tepat, bukan sekadar penguasaan teknis pemrograman.",
+    pemantik:["Bagaimana tim pengembang memastikan aplikasi yang dibangun benar-benar menjawab kebutuhan klien?","Apa risiko jika tahap analisis kebutuhan dilewati dalam pengembangan perangkat lunak?"]
+  },
+  { id:"interior", nama:"Desain Interior dan Teknik Furnitur", tag:"RUANG & MEBEL",
+    cp:"Peserta didik mampu merancang tata ruang interior dan memproduksi furnitur sesuai kebutuhan, anggaran, dan spesifikasi pelanggan menggunakan teknik dan material yang tepat.",
+    kompetensiAwal:"Peserta didik telah memahami dasar menggambar teknik dan pengukuran ruang.",
+    sarana:"Bengkel kerja kayu, mesin pertukangan (table saw, planer, router), software desain interior (SketchUp/AutoCAD), material contoh furnitur",
+    produk:"desain dan pembuatan furnitur custom (meja, kursi, lemari) pesanan pelanggan",
+    mitra:"masyarakat umum, UMKM mebel, dan instansi sekolah",
+    tujuan:[
+      "Peserta didik mampu membuat gambar kerja desain interior/furnitur sesuai kebutuhan klien.",
+      "Peserta didik mampu memproduksi furnitur sesuai gambar kerja dan standar kualitas.",
+      "Peserta didik mampu menghitung estimasi biaya dan material produksi furnitur."
+    ],
+    pemahaman:"Desain interior dan furnitur yang baik memadukan fungsi, estetika, dan kelayakan produksi sesuai anggaran pelanggan.",
+    pemantik:["Bagaimana desainer menyeimbangkan keinginan estetika klien dengan keterbatasan anggaran dan material?","Apa yang terjadi jika gambar kerja tidak akurat pada tahap produksi furnitur?"]
+  },
+  { id:"batik", nama:"Kriya Kreatif Batik dan Tekstil", tag:"KAIN & PEWARNA",
+    cp:"Peserta didik mampu merancang motif, memproduksi kain batik (tulis/cap) dan produk tekstil lain sesuai pesanan menggunakan teknik dan bahan yang tepat.",
+    kompetensiAwal:"Peserta didik telah memahami dasar motif batik dan teknik pewarnaan kain.",
+    sarana:"Bengkel/sanggar batik, kompor dan wajan batik, canting dan cap, bahan pewarna alami/sintetis, kain mori, alat tenun/jahit",
+    produk:"kain batik tulis/cap dan produk tekstil (busana, scarf) pesanan pelanggan",
+    mitra:"UMKM batik, butik lokal, dan dinas perindustrian",
+    tujuan:[
+      "Peserta didik mampu merancang motif batik sesuai tema dan permintaan pelanggan.",
+      "Peserta didik mampu memproduksi kain batik dengan teknik tulis/cap sesuai standar kualitas.",
+      "Peserta didik mampu mengolah kain batik menjadi produk tekstil siap jual."
+    ],
+    pemahaman:"Batik sebagai warisan budaya tetap dapat berkembang mengikuti tren pasar tanpa kehilangan nilai dan filosofi motifnya.",
+    pemantik:["Bagaimana menciptakan motif batik baru yang tetap menghormati pakem tradisi?","Apa tantangan memproduksi batik dalam jumlah dan waktu sesuai pesanan pelanggan?"]
+  },
+  { id:"film", nama:"Produksi Film", tag:"KAMERA & NARASI",
+    cp:"Peserta didik mampu memproduksi karya audio visual mulai dari praproduksi (naskah, storyboard), produksi (pengambilan gambar), hingga pascaproduksi (penyuntingan) sesuai kebutuhan klien.",
+    kompetensiAwal:"Peserta didik telah memahami dasar penulisan naskah dan pengoperasian kamera.",
+    sarana:"Studio produksi/ruang shooting, kamera video dan DSLR, lighting kit, mikrofon, software editing video (Adobe Premiere/DaVinci Resolve), komputer editing",
+    produk:"video promosi, dokumenter pendek, dan konten video pesanan klien",
+    mitra:"UMKM, instansi pemerintah, dan rumah produksi lokal",
+    tujuan:[
+      "Peserta didik mampu menyusun naskah dan storyboard sesuai brief produksi.",
+      "Peserta didik mampu melakukan pengambilan gambar dan suara sesuai standar teknis produksi.",
+      "Peserta didik mampu menyunting dan menyelesaikan karya audio visual sesuai format yang dipesan."
+    ],
+    pemahaman:"Produksi film adalah kerja tim lintas peran yang menuntut perencanaan matang agar hasil akhir sesuai visi dan kebutuhan klien.",
+    pemantik:["Bagaimana tim produksi memastikan hasil akhir video sesuai dengan brief awal klien?","Apa peran storyboard dalam efisiensi proses syuting?"]
+  },
+  { id:"kayu", nama:"Kriya Kreatif Kayu", tag:"UKIR & PERTUKANGAN",
+    cp:"Peserta didik mampu merancang dan memproduksi produk kerajinan dan mebel berbahan kayu sesuai pesanan menggunakan teknik pertukangan dan pengukiran yang tepat.",
+    kompetensiAwal:"Peserta didik telah memahami dasar penggunaan alat pertukangan kayu secara aman.",
+    sarana:"Bengkel kerja kayu, mesin gergaji dan ukir, alat pertukangan manual dan elektrik, bahan baku kayu, ruang finishing",
+    produk:"produk kerajinan dan mebel kayu (suvenir, ukiran, furnitur) pesanan pelanggan",
+    mitra:"UMKM kerajinan, toko suvenir, dan masyarakat umum",
+    tujuan:[
+      "Peserta didik mampu merancang desain produk kayu sesuai permintaan pelanggan.",
+      "Peserta didik mampu memproduksi produk kayu dengan teknik pertukangan/pengukiran yang tepat.",
+      "Peserta didik mampu melakukan finishing produk sesuai standar kualitas jual."
+    ],
+    pemahaman:"Produk kriya kayu yang bernilai jual tinggi memadukan keterampilan teknis, ketelitian, dan sentuhan estetika yang khas.",
+    pemantik:["Bagaimana pengrajin memastikan produk kayu pesanan sesuai ukuran dan desain yang diminta?","Apa yang membedakan produk kriya kayu massal dengan produk custom bernilai seni tinggi?"]
+  },
+  { id:"logam", nama:"Kriya Kreatif Logam dan Perhiasan", tag:"UKIR & TEMPA",
+    cp:"Peserta didik mampu merancang dan memproduksi aksesori serta perhiasan berbahan logam sesuai pesanan menggunakan teknik pengolahan logam yang tepat.",
+    kompetensiAwal:"Peserta didik telah memahami dasar sifat bahan logam dan teknik dasar pengolahannya.",
+    sarana:"Bengkel logam, alat patri dan solder, cetakan perhiasan, bahan logam (perak, kuningan, tembaga), alat ukir logam",
+    produk:"aksesori dan perhiasan logam (cincin, gelang, bros) pesanan pelanggan",
+    mitra:"UMKM perhiasan, toko aksesori, dan masyarakat umum",
+    tujuan:[
+      "Peserta didik mampu merancang desain perhiasan/aksesori logam sesuai permintaan pelanggan.",
+      "Peserta didik mampu memproduksi perhiasan logam dengan teknik tempa, ukir, dan patri yang tepat.",
+      "Peserta didik mampu melakukan finishing dan quality control produk logam sebelum diserahkan."
+    ],
+    pemahaman:"Kualitas produk perhiasan logam ditentukan oleh ketepatan teknik pengolahan dan kehalusan hasil akhir (finishing).",
+    pemantik:["Bagaimana pengrajin memastikan keamanan dan kenyamanan saat mengolah bahan logam?","Apa yang menentukan nilai jual sebuah produk perhiasan logam handmade?"]
+  },
+  { id:"kulit", nama:"Kriya Kreatif Kulit dan Imitasi", tag:"POTONG & JAHIT",
+    cp:"Peserta didik mampu merancang dan memproduksi produk berbahan kulit asli/imitasi sesuai pesanan menggunakan teknik pemotongan, penjahitan, dan finishing yang tepat.",
+    kompetensiAwal:"Peserta didik telah memahami dasar jenis bahan kulit dan teknik dasar penjahitan kulit.",
+    sarana:"Bengkel kerja kulit, mesin jahit kulit, alat potong dan pond, bahan kulit asli/imitasi, aksesori (ritsleting, gesper)",
+    produk:"produk kulit (dompet, tas, sabuk) pesanan pelanggan",
+    mitra:"UMKM produk kulit, toko fashion, dan masyarakat umum",
+    tujuan:[
+      "Peserta didik mampu merancang pola produk kulit sesuai permintaan pelanggan.",
+      "Peserta didik mampu memproduksi produk kulit dengan teknik potong dan jahit yang presisi.",
+      "Peserta didik mampu melakukan finishing dan pengecekan kualitas produk kulit."
+    ],
+    pemahaman:"Ketepatan pola dan kerapian jahitan menjadi penentu utama kualitas dan daya jual produk kriya kulit.",
+    pemantik:["Bagaimana pengrajin memilih jenis kulit yang sesuai dengan kebutuhan produk pesanan?","Apa dampak ketidaktepatan pola terhadap hasil akhir produk kulit?"]
+  },
+  { id:"lukis", nama:"Seni Lukis", tag:"KANVAS & WARNA",
+    cp:"Peserta didik mampu berkarya seni lukis dengan berbagai teknik dan media sesuai konsep, karakter, dan kebutuhan pemesan (komisi) maupun ekspresi personal.",
+    kompetensiAwal:"Peserta didik telah menguasai dasar menggambar, proporsi, dan pencampuran warna.",
+    sarana:"Studio lukis dengan pencahayaan alami, kanvas dan easel, cat (akrilik, minyak, cat air), kuas dan palet, ruang pameran mini",
+    produk:"lukisan komisi, mural, dan ilustrasi pesanan pelanggan",
+    mitra:"masyarakat umum, kafe/resto, dan instansi (mural fasilitas publik)",
+    tujuan:[
+      "Peserta didik mampu menerjemahkan konsep/keinginan pemesan ke dalam sketsa awal karya.",
+      "Peserta didik mampu menyelesaikan lukisan/mural dengan teknik dan media yang sesuai.",
+      "Peserta didik mampu mempresentasikan dan menyerahkan karya sesuai kesepakatan dengan pemesan."
+    ],
+    pemahaman:"Karya seni komisi menuntut keseimbangan antara memenuhi keinginan pemesan dan mempertahankan gaya serta integritas artistik pelukis.",
+    pemantik:["Bagaimana seniman menegosiasikan visi pribadinya dengan permintaan spesifik pemesan?","Apa yang membedakan proses melukis untuk komisi dengan melukis untuk ekspresi bebas?"]
+  },
+  { id:"informatika", nama:"Informatika", tag:"MAPEL UMUM · DIGITAL", kategori:"umum",
+    cp:"Peserta didik mampu berpikir komputasional dan memanfaatkan teknologi informasi dan komunikasi (TIK) secara produktif, termasuk mendokumentasikan proses, mengelola data, serta mempromosikan produk/jasa Teaching Factory sekolah secara digital.",
+    kompetensiAwal:"Peserta didik telah mampu mengoperasikan perangkat komputer/gawai dasar dan aplikasi perkantoran.",
+    sarana:"Laboratorium komputer, jaringan internet, aplikasi perkantoran dan multimedia, platform media sosial/e-commerce, kamera atau gawai untuk dokumentasi digital",
+    produk:"dokumentasi digital proses produksi, konten promosi (media sosial/katalog daring), dan sistem pencatatan data sederhana untuk unit produksi TEFA sekolah",
+    mitra:"unit produksi/TEFA sekolah, UMKM mitra, dan pengelola media sosial atau marketplace sekolah",
+    tujuan:[
+      "Peserta didik mampu menerapkan berpikir komputasional untuk menyelesaikan persoalan pengelolaan data produksi TEFA.",
+      "Peserta didik mampu membuat dokumentasi digital dan konten promosi untuk produk/jasa Teaching Factory.",
+      "Peserta didik mampu memanfaatkan aplikasi digital untuk mendukung pencatatan dan pelaporan hasil produksi."
+    ],
+    pemahaman:"Teknologi informasi bukan sekadar alat bantu tugas, melainkan sarana untuk meningkatkan nilai jual dan jangkauan pemasaran produk Teaching Factory secara nyata.",
+    pemantik:["Bagaimana teknologi digital dapat memperluas jangkauan pemasaran produk unit produksi sekolah?","Data apa saja yang perlu dicatat secara digital agar proses produksi TEFA dapat dievaluasi dengan baik?"]
+  },
+  { id:"bing", nama:"Bahasa Inggris", tag:"MAPEL UMUM · BAHASA", kategori:"umum",
+    cp:"Peserta didik mampu berkomunikasi dalam bahasa Inggris lisan dan tulisan secara sederhana namun efektif, termasuk menyusun deskripsi produk, melayani pelanggan, dan mempromosikan produk/jasa Teaching Factory secara profesional dalam bahasa Inggris.",
+    kompetensiAwal:"Peserta didik telah memahami struktur kalimat dasar dan kosakata umum bahasa Inggris.",
+    sarana:"Ruang kelas dengan media audio-visual, kamus/aplikasi penerjemah, contoh materi promosi berbahasa Inggris, rekaman percakapan pelayanan pelanggan",
+    produk:"deskripsi produk (product description), materi promosi, dan naskah pelayanan pelanggan berbahasa Inggris untuk mendukung pemasaran produk/jasa TEFA",
+    mitra:"unit produksi/TEFA sekolah, pelanggan atau wisatawan mancanegara, dan platform pemasaran daring berbahasa Inggris",
+    tujuan:[
+      "Peserta didik mampu menyusun deskripsi produk dan materi promosi dalam bahasa Inggris yang komunikatif.",
+      "Peserta didik mampu melayani dan berkomunikasi dengan pelanggan berbahasa Inggris secara sopan dan profesional.",
+      "Peserta didik mampu menyunting dan menyempurnakan teks promosi berbahasa Inggris sesuai kaidah tata bahasa yang tepat."
+    ],
+    pemahaman:"Kemampuan berbahasa Inggris membuka peluang produk/jasa Teaching Factory sekolah menjangkau pasar dan pelanggan yang lebih luas.",
+    pemantik:["Bagaimana cara menyusun deskripsi produk dalam bahasa Inggris yang menarik namun tetap akurat?","Apa perbedaan gaya bahasa saat melayani pelanggan lokal dan pelanggan mancanegara?"]
+  },
+  { id:"matematika", nama:"Matematika", tag:"MAPEL UMUM · NUMERASI", kategori:"umum",
+    cp:"Peserta didik mampu menerapkan konsep matematika (aritmetika sosial, statistika, pengukuran, dan aljabar) untuk menghitung biaya produksi, menentukan harga jual, dan menganalisis kelayakan usaha produk/jasa Teaching Factory.",
+    kompetensiAwal:"Peserta didik telah memahami operasi hitung dasar, persentase, dan konsep pengukuran.",
+    sarana:"Alat hitung/kalkulator, aplikasi lembar kerja (spreadsheet), lembar kerja perhitungan biaya produksi, contoh studi kasus unit produksi",
+    produk:"rencana anggaran biaya (RAB) produksi, perhitungan harga pokok produksi (HPP) dan harga jual, serta laporan analisis keuntungan untuk produk/jasa TEFA",
+    mitra:"unit produksi/TEFA sekolah dan bendahara atau pengelola koperasi sekolah",
+    tujuan:[
+      "Peserta didik mampu menghitung harga pokok produksi (HPP) dan menentukan harga jual produk/jasa TEFA.",
+      "Peserta didik mampu menyusun rencana anggaran biaya (RAB) untuk sebuah proyek produksi.",
+      "Peserta didik mampu menganalisis data keuntungan/kerugian sederhana menggunakan konsep statistika dasar."
+    ],
+    pemahaman:"Perhitungan matematis yang tepat menjadi dasar agar produk/jasa Teaching Factory terjual dengan harga yang wajar sekaligus menguntungkan.",
+    pemantik:["Bagaimana menentukan harga jual yang wajar bagi pelanggan namun tetap menguntungkan unit produksi?","Mengapa pencatatan biaya produksi yang akurat penting sebelum menetapkan harga jual?"]
+  }
+];
+
+/* ================= STATE ================= */
+const state = {
+  step: 0,
+  jurusanId: null,
+  namaGuru:"", nip:"", instansi:"SMK Negeri 12 Surabaya", mapel:"",
+  kelas:"X", fase:"E", semester:"Ganjil", tahunAjaran:"2026/2027",
+  alokasiWaktu:"", jumlahPertemuan:"",
+  cp:"", kompetensiAwal:"", sarana:"",
+  targetPD:"Peserta didik reguler tanpa kesulitan dalam mencerna dan memahami materi ajar.",
+  ppp: {keimanan:false, kewargaan:false, penalaran:true, kreativitas:true, kolaborasi:true, kemandirian:true, kesehatan:false, komunikasi:false},
+  modelPembelajaran:"Teaching Factory (TEFA) — pembelajaran berbasis produksi produk/jasa nyata sesuai pesanan pelanggan/mitra industri",
+  tujuan:[], pemahaman:"", pemantik:[""],
+  produk:"", mitra:"",
+  tahapan:[], // filled from template
+  asesmenDiagnostik:"Tanya jawab dan observasi awal untuk memetakan pemahaman serta keterampilan dasar peserta didik sebelum memulai proyek TEFA.",
+  asesmenFormatif:"Observasi proses kerja, catatan kemajuan produksi (logbook), dan umpan balik berkala selama tahapan produksi berlangsung.",
+  asesmenSumatif:"Penilaian produk/jasa akhir yang dihasilkan berdasarkan kesesuaian dengan pesanan, kualitas, dan ketepatan waktu penyerahan kepada pelanggan.",
+  pengayaan:"Peserta didik yang telah mencapai kompetensi dengan baik diberi tantangan tambahan berupa proyek TEFA dengan tingkat kerumitan atau skala pesanan yang lebih tinggi.",
+  remedial:"Peserta didik yang belum mencapai kompetensi mendapat pendampingan intensif dan kesempatan mengulang tahapan produksi dengan bimbingan tutor sebaya/guru.",
+  lampiran:"LKPD (Lembar Kerja Peserta Didik), bahan bacaan pendukung, contoh produk/portofolio TEFA terdahulu, dan glosarium istilah teknis kejuruan.",
+};
+
+const STAGE_TEMPLATE = [
+  {judul:"Analisis Pesanan / Kebutuhan Pelanggan", waktu:"Pertemuan 1",
+   guru:"Guru menghadirkan gambaran pesanan/brief dari mitra atau simulasi pelanggan, memfasilitasi diskusi kelompok untuk menganalisis kebutuhan, spesifikasi, tenggat waktu, dan anggaran.",
+   siswa:"Peserta didik menggali informasi kebutuhan pelanggan, menyusun spesifikasi teknis, dan merumuskan rencana kerja untuk memproduksi {produk}."},
+  {judul:"Perancangan / Desain Produk", waktu:"Pertemuan 2",
+   guru:"Guru membimbing peserta didik dalam menyusun rancangan/desain awal, memberikan umpan balik terhadap konsep yang diajukan, dan memastikan kesesuaian dengan standar kejuruan.",
+   siswa:"Peserta didik membuat rancangan/desain produk, menyusun daftar kebutuhan bahan dan alat, serta mempresentasikan rancangan untuk mendapat persetujuan (sign-off)."},
+  {judul:"Proses Produksi", waktu:"Pertemuan 3–5",
+   guru:"Guru mendampingi proses produksi sesuai SOP (Standard Operating Procedure) industri, memantau keselamatan kerja (K3), dan memberikan bimbingan teknis saat dibutuhkan.",
+   siswa:"Peserta didik melaksanakan proses produksi {produk} secara bertahap, mendokumentasikan progres kerja (logbook), dan berkolaborasi dalam tim produksi."},
+  {judul:"Pengendalian Mutu (Quality Control) & Evaluasi", waktu:"Pertemuan 6",
+   guru:"Guru memfasilitasi sesi pengecekan mutu bersama, memberikan kriteria penilaian objektif, dan membimbing peserta didik melakukan perbaikan (revisi) bila diperlukan.",
+   siswa:"Peserta didik memeriksa kesesuaian hasil produksi dengan spesifikasi pesanan, melakukan perbaikan bila ditemukan ketidaksesuaian, dan menyiapkan produk akhir."},
+  {judul:"Serah Terima, Pemasaran & Refleksi", waktu:"Pertemuan 7",
+   guru:"Guru memfasilitasi sesi serah terima produk kepada {mitra}, memandu presentasi hasil kerja, dan memimpin refleksi capaian pembelajaran bersama peserta didik.",
+   siswa:"Peserta didik menyerahkan {produk} kepada {mitra} atau mempresentasikan hasil karya, menerima umpan balik pelanggan, dan menuliskan refleksi proses belajar."},
+];
+
+/* ================= STEP CONFIG ================= */
+const STEPS = [
+  {key:"identitas", label:"Identitas & Jurusan", sub:"Data dasar modul"},
+  {key:"awal", label:"Komponen Awal", sub:"CP, sarana, profil pelajar"},
+  {key:"tujuan", label:"Tujuan & Produk TEFA", sub:"Target belajar & produk"},
+  {key:"tahapan", label:"Langkah Pembelajaran", sub:"5 tahap sintaks TEFA"},
+  {key:"asesmen", label:"Asesmen & Rubrik", sub:"Penilaian produk"},
+  {key:"final", label:"Lampiran & Unduh", sub:"Selesaikan modul"},
+];
+
+/* ================= HELPERS ================= */
+function getJurusan(){ return JURUSAN.find(j=>j.id===state.jurusanId); }
+function toast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-text').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+function fillFromJurusan(){
+  const j = getJurusan();
+  if(!j) return;
+  state.cp = j.cp;
+  state.kompetensiAwal = j.kompetensiAwal;
+  state.sarana = j.sarana;
+  state.produk = j.produk;
+  state.mitra = j.mitra;
+  state.tujuan = [...j.tujuan];
+  state.pemahaman = j.pemahaman;
+  state.pemantik = [...j.pemantik];
+  state.tahapan = STAGE_TEMPLATE.map(s=>({
+    judul:s.judul, waktu:s.waktu,
+    guru:s.guru,
+    siswa:s.siswa.replace("{produk}", j.produk).replace("{mitra}", j.mitra)
+  }));
+  state.tahapan[3+1] && (state.tahapan[4].guru = state.tahapan[4].guru); // no-op guard
+  state.tahapan.forEach(s=>{ s.guru = s.guru.replace("{mitra}", j.mitra).replace("{produk}", j.produk); });
+}
+
+/* ================= RENDER: STEPPER ================= */
+function renderStepper(){
+  const wrap = document.getElementById('stepper');
+  wrap.innerHTML = STEPS.map((s,i)=>{
+    const cls = i===state.step ? 'active' : (i<state.step ? 'done' : '');
+    return `<div class="step-item ${cls}" data-step="${i}">
+      <div class="step-num">${i<state.step ? '✓' : (i+1)}</div>
+      <div><span class="step-label">${s.label}</span><span class="step-sub">${s.sub}</span></div>
+    </div>`;
+  }).join('');
+  wrap.querySelectorAll('.step-item').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const target = parseInt(el.dataset.step);
+      if(target <= state.step || state.jurusanId){ state.step = target; render(); }
+    });
+  });
+}
+
+/* ================= RENDER: PANEL ================= */
+function render(){
+  renderStepper();
+  const s = STEPS[state.step];
+  document.getElementById('panel-eyebrow').textContent = `Tahap ${state.step+1} / ${STEPS.length}`;
+  document.getElementById('panel-title').textContent = s.label;
+  document.getElementById('progress-track').textContent = `Langkah ${state.step+1} dari ${STEPS.length}`;
+  document.getElementById('btn-prev').disabled = state.step===0;
+  document.getElementById('btn-next').textContent = state.step===STEPS.length-1 ? 'Selesai' : 'Lanjut →';
+
+  const body = document.getElementById('panel-body');
+  const desc = document.getElementById('panel-desc');
+
+  if(s.key==="identitas"){
+    desc.textContent = "Pilih kompetensi keahlian, lalu lengkapi identitas modul ajar.";
+    body.innerHTML = `
+      <div class="field">
+        <label>Kompetensi Keahlian / Jurusan</label>
+        <div class="jurusan-grid" id="jurusan-grid"></div>
+      </div>
+      <div class="section-label">Identitas Modul</div>
+      <div class="row2">
+        <div class="field"><label>Nama Penyusun (Guru)</label><input type="text" id="f-namaGuru" value="${esc(state.namaGuru)}" placeholder="cth. Dyah Ayu Kartika, S.Pd."></div>
+        <div class="field"><label>NIP (opsional)</label><input type="text" id="f-nip" value="${esc(state.nip)}" placeholder="cth. 198501012010012001"></div>
+      </div>
+      <div class="field"><label>Institusi</label><input type="text" id="f-instansi" value="${esc(state.instansi)}"></div>
+      <div class="field"><label>Mata Pelajaran / Konsentrasi Keahlian</label><input type="text" id="f-mapel" value="${esc(state.mapel)}" placeholder="cth. Praktik Produksi Kriya Batik"></div>
+      <div class="row3">
+        <div class="field"><label>Kelas</label>
+          <select id="f-kelas">${['X','XI','XII'].map(k=>`<option ${state.kelas===k?'selected':''}>${k}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>Fase</label>
+          <select id="f-fase">${['E','F'].map(k=>`<option ${state.fase===k?'selected':''}>${k}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label>Semester</label>
+          <select id="f-semester">${['Ganjil','Genap'].map(k=>`<option ${state.semester===k?'selected':''}>${k}</option>`).join('')}</select>
+        </div>
+      </div>
+      <div class="row3">
+        <div class="field"><label>Tahun Ajaran</label><input type="text" id="f-tahunAjaran" value="${esc(state.tahunAjaran)}"></div>
+        <div class="field"><label>Alokasi Waktu (JP)</label><input type="text" id="f-alokasi" value="${esc(state.alokasiWaktu)}" placeholder="cth. 7 JP x 45 menit"></div>
+        <div class="field"><label>Jumlah Pertemuan</label><input type="text" id="f-pertemuan" value="${esc(state.jumlahPertemuan)}" placeholder="cth. 7 pertemuan"></div>
+      </div>
+    `;
+    renderJurusanGrid();
+    bindText('f-namaGuru','namaGuru'); bindText('f-nip','nip'); bindText('f-instansi','instansi');
+    bindText('f-mapel','mapel'); bindText('f-alokasi','alokasiWaktu'); bindText('f-pertemuan','jumlahPertemuan');
+    bindText('f-tahunAjaran','tahunAjaran');
+    bindSelect('f-kelas','kelas'); bindSelect('f-fase','fase'); bindSelect('f-semester','semester');
+  }
+
+  if(s.key==="awal"){
+    desc.textContent = "Komponen ini terisi otomatis sesuai jurusan terpilih — silakan sunting sesuai kebutuhan kelas Anda.";
+    body.innerHTML = `
+      <div class="field"><label>Capaian Pembelajaran (CP)</label>
+        <textarea id="f-cp" style="min-height:100px">${esc(state.cp)}</textarea>
+        <p class="hint">Sesuaikan dengan CP resmi Kompetensi Keahlian dari Pusat Kurikulum dan Perbukuan (Kemendikdasmen).</p>
+      </div>
+      <div class="field"><label>Kompetensi Awal</label><textarea id="f-kompetensiAwal">${esc(state.kompetensiAwal)}</textarea></div>
+      <div class="field"><label>Sarana dan Prasarana</label><textarea id="f-sarana" style="min-height:90px">${esc(state.sarana)}</textarea></div>
+      <div class="field"><label>Target Peserta Didik</label><textarea id="f-targetPD">${esc(state.targetPD)}</textarea></div>
+      <div class="section-label">Dimensi Profil Lulusan (Kepmendikbud No. 244/M/2024)</div>
+      <div class="pill-group" id="ppp-group">
+        ${pppPills()}
+      </div>
+      <p class="hint">Pilih dimensi yang paling relevan dikembangkan melalui proyek Teaching Factory ini.</p>
+      <div class="section-label">Model Pembelajaran</div>
+      <div class="field"><textarea id="f-model">${esc(state.modelPembelajaran)}</textarea></div>
+    `;
+    bindText('f-cp','cp'); bindText('f-kompetensiAwal','kompetensiAwal'); bindText('f-sarana','sarana');
+    bindText('f-targetPD','targetPD'); bindText('f-model','modelPembelajaran');
+    bindPppPills();
+  }
+
+  if(s.key==="tujuan"){
+    desc.textContent = "Rumuskan tujuan pembelajaran dan tentukan produk/jasa TEFA yang akan diproduksi peserta didik.";
+    body.innerHTML = `
+      <div class="field"><label>Tujuan Pembelajaran</label>
+        <div class="list-editor" id="tujuan-list"></div>
+        <button class="add-btn" id="add-tujuan">+ tambah tujuan pembelajaran</button>
+      </div>
+      <div class="field"><label>Pemahaman Bermakna</label><textarea id="f-pemahaman">${esc(state.pemahaman)}</textarea></div>
+      <div class="field"><label>Pertanyaan Pemantik</label>
+        <div class="list-editor" id="pemantik-list"></div>
+        <button class="add-btn" id="add-pemantik">+ tambah pertanyaan pemantik</button>
+      </div>
+      <div class="section-label">Produk / Jasa Teaching Factory</div>
+      <div class="field"><label>Produk / Jasa yang Dihasilkan</label><textarea id="f-produk">${esc(state.produk)}</textarea></div>
+      <div class="field"><label>Mitra / Pemesan (Industri, UMKM, Masyarakat)</label><textarea id="f-mitra">${esc(state.mitra)}</textarea></div>
+      <div class="note-box">Tahap "Langkah Pembelajaran" pada halaman berikutnya akan menyesuaikan otomatis dengan produk dan mitra yang Anda tuliskan di sini.</div>
+    `;
+    renderDynamicList('tujuan-list','tujuan');
+    renderDynamicList('pemantik-list','pemantik');
+    document.getElementById('add-tujuan').onclick = ()=>{ state.tujuan.push(""); render(); };
+    document.getElementById('add-pemantik').onclick = ()=>{ state.pemantik.push(""); render(); };
+    bindText('f-pemahaman','pemahaman');
+    bindText('f-produk','produk'); bindText('f-mitra','mitra');
+  }
+
+  if(s.key==="tahapan"){
+    desc.textContent = "Sintaks pembelajaran mengikuti lima tahap alur kerja Teaching Factory. Sunting kegiatan sesuai kebutuhan.";
+    body.innerHTML = `<div id="stage-wrap"></div>
+      <div class="note-box">Alur ini mencerminkan proses produksi nyata: dari analisis pesanan hingga serah terima kepada ${esc(state.mitra)||'pelanggan/mitra'}. Sesuaikan alokasi waktu tiap tahap dengan total ${esc(state.alokasiWaktu)||'alokasi waktu'} pada modul Anda.</div>`;
+    const wrap = document.getElementById('stage-wrap');
+    wrap.innerHTML = state.tahapan.map((st,i)=>`
+      <div class="stage">
+        <div class="stage-head"><h4>${i+1}. ${esc(st.judul)}</h4><span class="mono">${esc(st.waktu)}</span></div>
+        <div class="field"><label>Alokasi Waktu Tahap</label><input type="text" data-i="${i}" class="stage-waktu" value="${esc(st.waktu)}"></div>
+        <div class="field"><label>Kegiatan Guru</label><textarea data-i="${i}" class="stage-guru">${esc(st.guru)}</textarea></div>
+        <div class="field" style="margin-bottom:0;"><label>Kegiatan Peserta Didik</label><textarea data-i="${i}" class="stage-siswa">${esc(st.siswa)}</textarea></div>
+      </div>
+    `).join('');
+    wrap.querySelectorAll('.stage-waktu').forEach(el=>el.addEventListener('input',e=>{state.tahapan[el.dataset.i].waktu=e.target.value;}));
+    wrap.querySelectorAll('.stage-guru').forEach(el=>el.addEventListener('input',e=>{state.tahapan[el.dataset.i].guru=e.target.value;}));
+    wrap.querySelectorAll('.stage-siswa').forEach(el=>el.addEventListener('input',e=>{state.tahapan[el.dataset.i].siswa=e.target.value;}));
+  }
+
+  if(s.key==="asesmen"){
+    desc.textContent = "Tentukan bentuk asesmen dan rubrik penilaian produk TEFA.";
+    body.innerHTML = `
+      <div class="field"><label>Asesmen Diagnostik</label><textarea id="f-diag">${esc(state.asesmenDiagnostik)}</textarea></div>
+      <div class="field"><label>Asesmen Formatif</label><textarea id="f-formatif">${esc(state.asesmenFormatif)}</textarea></div>
+      <div class="field"><label>Asesmen Sumatif</label><textarea id="f-sumatif">${esc(state.asesmenSumatif)}</textarea></div>
+      <div class="section-label">Rubrik Penilaian Produk TEFA</div>
+      <table class="rubrik-table">
+        <thead><tr><th style="width:22%">Aspek</th><th>Indikator Penilaian</th><th style="width:16%">Bobot</th></tr></thead>
+        <tbody>
+          <tr><td>Kesesuaian Pesanan</td><td>Produk/jasa sesuai spesifikasi dan kebutuhan yang diminta pelanggan/mitra</td><td>25%</td></tr>
+          <tr><td>Kualitas Teknis &amp; Estetika</td><td>Ketepatan teknik pengerjaan dan nilai estetika sesuai standar kejuruan</td><td>25%</td></tr>
+          <tr><td>Ketepatan Waktu</td><td>Produk/jasa diselesaikan dan diserahkan sesuai tenggat yang disepakati</td><td>20%</td></tr>
+          <tr><td>Kreativitas &amp; Inovasi</td><td>Terdapat nilai tambah, ide orisinal, atau penyelesaian masalah kreatif</td><td>15%</td></tr>
+          <tr><td>Kepuasan Pelanggan</td><td>Umpan balik positif dari mitra/pelanggan terhadap hasil akhir</td><td>15%</td></tr>
+        </tbody>
+      </table>
+      <p class="hint" style="margin-top:8px;">Rubrik ini dapat disesuaikan langsung pada dokumen Word setelah diunduh.</p>
+    `;
+    bindText('f-diag','asesmenDiagnostik'); bindText('f-formatif','asesmenFormatif'); bindText('f-sumatif','asesmenSumatif');
+  }
+
+  if(s.key==="final"){
+    desc.textContent = "Tahap terakhir: lengkapi lampiran, lalu unduh modul ajar dalam format Microsoft Word.";
+    body.innerHTML = `
+      <div class="field"><label>Pengayaan</label><textarea id="f-pengayaan">${esc(state.pengayaan)}</textarea></div>
+      <div class="field"><label>Remedial</label><textarea id="f-remedial">${esc(state.remedial)}</textarea></div>
+      <div class="field"><label>Lampiran</label><textarea id="f-lampiran">${esc(state.lampiran)}</textarea></div>
+      <div class="section-label">Ringkasan Modul</div>
+      <div class="note-box" id="summary"></div>
+      <div style="margin-top:26px; text-align:center;">
+        <button class="btn btn-generate" id="btn-generate">⬇ Unduh Modul Ajar (.doc — siap dibuka di Microsoft Word)</button>
+        <p class="hint" style="margin-top:10px;">File akan terunduh otomatis dan dapat langsung dibuka serta diedit di Microsoft Word.</p>
+      </div>
+    `;
+    bindText('f-pengayaan','pengayaan'); bindText('f-remedial','remedial'); bindText('f-lampiran','lampiran');
+    const j = getJurusan();
+    document.getElementById('summary').innerHTML = `
+      <strong>${esc(j?j.nama:'—')}</strong> · ${esc(state.mapel)||'(mapel belum diisi)'}<br>
+      Kelas ${esc(state.kelas)} · Fase ${esc(state.fase)} · ${esc(state.semester)} · ${esc(state.tahunAjaran)}<br>
+      Penyusun: ${esc(state.namaGuru)||'(nama belum diisi)'}
+    `;
+    document.getElementById('btn-generate').onclick = generateDocx;
+  }
+}
+
+function pppPills(){
+  const labels = {keimanan:"Keimanan & Ketakwaan", kewargaan:"Kewargaan", penalaran:"Penalaran Kritis", kreativitas:"Kreativitas", kolaborasi:"Kolaborasi", kemandirian:"Kemandirian", kesehatan:"Kesehatan", komunikasi:"Komunikasi"};
+  return Object.keys(labels).map(k=>`<div class="pill ${state.ppp[k]?'active':''}" data-k="${k}">${labels[k]}</div>`).join('');
+}
+function bindPppPills(){
+  document.querySelectorAll('#ppp-group .pill').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const k = el.dataset.k;
+      state.ppp[k] = !state.ppp[k];
+      el.classList.toggle('active');
+    });
+  });
+}
+
+function renderJurusanGrid(){
+  const grid = document.getElementById('jurusan-grid');
+  const produktif = JURUSAN.filter(j=>j.kategori!=="umum");
+  const umum = JURUSAN.filter(j=>j.kategori==="umum");
+  const card = j => `
+    <div class="jurusan-card ${state.jurusanId===j.id?'selected':''}" data-id="${j.id}">
+      <span class="j-name">${j.nama}</span>
+      <span class="j-tag">${j.tag}</span>
+    </div>`;
+  grid.innerHTML = `
+    <p class="mono" style="grid-column:1/-1;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--indigo);margin:2px 0 2px;">Kompetensi Keahlian (Produktif)</p>
+    ${produktif.map(card).join('')}
+    <p class="mono" style="grid-column:1/-1;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--indigo);margin:14px 0 2px;padding-top:12px;border-top:1px dashed var(--line);">Mata Pelajaran Umum (Terintegrasi TEFA)</p>
+    ${umum.map(card).join('')}
+  `;
+  grid.querySelectorAll('.jurusan-card').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const isNew = state.jurusanId !== el.dataset.id;
+      state.jurusanId = el.dataset.id;
+      if(isNew){ fillFromJurusan(); toast('Formulir terisi otomatis sesuai jurusan'); }
+      render();
+    });
+  });
+}
+
+function renderDynamicList(containerId, stateKey){
+  const el = document.getElementById(containerId);
+  el.innerHTML = state[stateKey].map((v,i)=>`
+    <div class="list-row">
+      <textarea data-i="${i}" data-key="${stateKey}">${esc(v)}</textarea>
+      <button class="rm-btn" data-i="${i}" data-key="${stateKey}" title="Hapus">×</button>
+    </div>
+  `).join('');
+  el.querySelectorAll('textarea').forEach(t=>{
+    t.addEventListener('input', e=>{ state[stateKey][t.dataset.i] = e.target.value; });
+  });
+  el.querySelectorAll('.rm-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      state[stateKey].splice(parseInt(b.dataset.i),1);
+      render();
+    });
+  });
+}
+
+function bindText(id, key){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', e=>{ state[key] = e.target.value; });
+}
+function bindSelect(id, key){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('change', e=>{ state[key] = e.target.value; });
+}
+function esc(str){
+  return (str||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ================= NAV ================= */
+document.getElementById('btn-next').addEventListener('click', ()=>{
+  if(state.step===0 && !state.jurusanId){ toast('Pilih kompetensi keahlian terlebih dahulu'); return; }
+  if(state.step < STEPS.length-1){ state.step++; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+document.getElementById('btn-prev').addEventListener('click', ()=>{
+  if(state.step>0){ state.step--; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+});
+
+/* ================= WORD EXPORT ================= */
+function generateDocx(){
+  const j = getJurusan();
+  const pppLabels = {
+    keimanan:"Keimanan dan Ketakwaan terhadap Tuhan YME — meyakini dan mengamalkan ajaran agama/kepercayaan, berakhlak mulia, serta menjaga hubungan baik dengan Tuhan, sesama manusia, dan lingkungan",
+    kewargaan:"Kewargaan — bangga akan identitas dan budaya, menghargai keberagaman, menjaga persatuan bangsa, serta menaati aturan bernegara dan bermasyarakat",
+    penalaran:"Penalaran Kritis — memiliki rasa ingin tahu, berpikir logis dan analitis, serta mampu menganalisis dan menyelesaikan permasalahan",
+    kreativitas:"Kreativitas — mampu menghasilkan gagasan dan karya yang orisinal serta mencari alternatif solusi atas suatu permasalahan",
+    kolaborasi:"Kolaborasi — mampu bekerja sama, berkontribusi, serta membangun kepemilikan bersama dalam kelompok",
+    kemandirian:"Kemandirian — memiliki regulasi diri, percaya diri, disiplin, dan bertanggung jawab atas proses serta hasil belajarnya",
+    kesehatan:"Kesehatan — menjaga kesehatan fisik dan mental sebagai modal utama untuk belajar dan berkarya",
+    komunikasi:"Komunikasi — mampu menyimak, berbicara, membaca, dan menulis, serta memanfaatkan berbagai media untuk berinteraksi secara efektif"
+  };
+  const pppActive = Object.keys(pppLabels).filter(k=>state.ppp[k]).map(k=>pppLabels[k]);
+
+  const rowsIdentitas = [
+    ["Nama Penyusun", state.namaGuru || '-'],
+    ["NIP", state.nip || '-'],
+    ["Institusi", state.instansi || '-'],
+    ["Kompetensi Keahlian", j ? j.nama : '-'],
+    ["Mata Pelajaran / Konsentrasi", state.mapel || '-'],
+    ["Kelas / Fase", `${state.kelas} / Fase ${state.fase}`],
+    ["Semester / Tahun Ajaran", `${state.semester} / ${state.tahunAjaran}`],
+    ["Alokasi Waktu", state.alokasiWaktu || '-'],
+    ["Jumlah Pertemuan", state.jumlahPertemuan || '-'],
+  ];
+
+  const li = arr => arr.filter(x=>x && x.trim()).map(x=>`<p style="margin:0 0 6px 0;">${esc(x)}</p>`).join('');
+  const numbered = arr => `<ol style="margin:0;padding-left:20px;">${arr.filter(x=>x&&x.trim()).map(x=>`<li style="margin-bottom:6px;">${esc(x)}</li>`).join('')}</ol>`;
+
+  const stagesHtml = state.tahapan.map((st,i)=>`
+    <div style="margin-bottom:14px;">
+      <p style="font-weight:bold;font-size:12.5pt;margin:0 0 2px 0;color:#2b3a55;">Tahap ${i+1}: ${esc(st.judul)} <span style="font-weight:normal;color:#5a5346;">(${esc(st.waktu)})</span></p>
+      <table style="width:100%;border-collapse:collapse;margin-top:4px;">
+        <tr>
+          <td style="border:1px solid #999;padding:6px 8px;width:18%;background:#f1ede2;font-weight:bold;vertical-align:top;">Kegiatan Guru</td>
+          <td style="border:1px solid #999;padding:6px 8px;">${esc(st.guru)}</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #999;padding:6px 8px;background:#f1ede2;font-weight:bold;vertical-align:top;">Kegiatan Peserta Didik</td>
+          <td style="border:1px solid #999;padding:6px 8px;">${esc(st.siswa)}</td>
+        </tr>
+      </table>
+    </div>
+  `).join('');
+
+  const html = `
+  <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+  <head>
+    <meta charset="utf-8">
+    <title>Modul Ajar TEFA</title>
+    <!--[if gte mso 9]>
+    <xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>
+    <![endif]-->
+    <style>
+      @page Section1 { size: 21cm 29.7cm; margin: 2.5cm 2.2cm 2.5cm 2.2cm; }
+      div.Section1 { page: Section1; }
+      body{font-family:'Calibri','Arial',sans-serif;font-size:11.5pt;color:#211d16;line-height:1.5;}
+      h1{font-size:18pt;color:#2b3a55;margin:0 0 4px 0;}
+      h2{font-size:13.5pt;color:#2b3a55;border-bottom:1.5pt solid #c15f3c;padding-bottom:3px;margin:22px 0 10px 0;}
+      h3{font-size:12pt;color:#2b3a55;margin:14px 0 6px 0;}
+      table{border-collapse:collapse;}
+      td,th{font-size:11pt;}
+      .cover-sub{font-size:11pt;color:#5a5346;margin:0 0 18px 0;}
+      .tag{display:inline-block;background:#c99a3d;color:#fff;font-size:9.5pt;padding:2px 10px;border-radius:10px;margin-bottom:10px;}
+    </style>
+  </head>
+  <body>
+  <div class="Section1">
+
+    <table style="width:100%;border:none;margin-bottom:6px;">
+      <tr>
+        <td style="border:none;vertical-align:middle;width:70px;">
+          <img src="data:image/png;base64,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" alt="Logo SMKN 12 Surabaya" style="width:56px;height:56px;object-fit:contain;">
+        </td>
+        <td style="border:none;vertical-align:middle;">
+          <h1>MODUL AJAR</h1>
+          <p class="cover-sub">Kurikulum Merdeka — Berbasis Teaching Factory (TEFA)<br>SMK Negeri 12 Surabaya</p>
+        </td>
+      </tr>
+    </table>
+    <span class="tag">${j ? esc(j.nama.toUpperCase()) : ''}</span>
+
+    <h2>A. Identitas Modul</h2>
+    <table style="width:100%;border:1px solid #999;">
+      ${rowsIdentitas.map(r=>`<tr><td style="border:1px solid #999;padding:6px 10px;width:32%;background:#f1ede2;font-weight:bold;">${esc(r[0])}</td><td style="border:1px solid #999;padding:6px 10px;">${esc(r[1])}</td></tr>`).join('')}
+    </table>
+
+    <h2>B. Komponen Awal</h2>
+    <h3>1. Capaian Pembelajaran (CP)</h3>
+    <p>${esc(state.cp)}</p>
+    <h3>2. Kompetensi Awal</h3>
+    <p>${esc(state.kompetensiAwal)}</p>
+    <h3>3. Dimensi Profil Lulusan <span style="font-weight:normal;font-size:10pt;color:#5a5346;">(Kepmendikbud No. 244/M/2024)</span></h3>
+    ${pppActive.length ? `<ul style="margin:0;padding-left:20px;">${pppActive.map(x=>`<li style="margin-bottom:4px;">${esc(x)}</li>`).join('')}</ul>` : '<p>-</p>'}
+    <h3>4. Sarana dan Prasarana</h3>
+    <p>${esc(state.sarana)}</p>
+    <h3>5. Target Peserta Didik</h3>
+    <p>${esc(state.targetPD)}</p>
+    <h3>6. Model Pembelajaran</h3>
+    <p>${esc(state.modelPembelajaran)}</p>
+
+    <h2>C. Komponen Inti</h2>
+    <h3>1. Tujuan Pembelajaran</h3>
+    ${numbered(state.tujuan)}
+    <h3>2. Pemahaman Bermakna</h3>
+    <p>${esc(state.pemahaman)}</p>
+    <h3>3. Pertanyaan Pemantik</h3>
+    ${numbered(state.pemantik)}
+    <h3>4. Produk / Jasa Teaching Factory</h3>
+    <p><b>Produk/Jasa yang dihasilkan:</b> ${esc(state.produk)}</p>
+    <p><b>Mitra / Pemesan:</b> ${esc(state.mitra)}</p>
+
+    <h3>5. Langkah-Langkah Pembelajaran (Sintaks TEFA)</h3>
+    ${stagesHtml}
+
+    <h2>D. Asesmen</h2>
+    <h3>1. Asesmen Diagnostik</h3>
+    <p>${esc(state.asesmenDiagnostik)}</p>
+    <h3>2. Asesmen Formatif</h3>
+    <p>${esc(state.asesmenFormatif)}</p>
+    <h3>3. Asesmen Sumatif</h3>
+    <p>${esc(state.asesmenSumatif)}</p>
+    <h3>4. Rubrik Penilaian Produk TEFA</h3>
+    <table style="width:100%;border:1px solid #999;">
+      <tr>
+        <td style="border:1px solid #999;padding:6px 8px;background:#f1ede2;font-weight:bold;">Aspek</td>
+        <td style="border:1px solid #999;padding:6px 8px;background:#f1ede2;font-weight:bold;">Indikator Penilaian</td>
+        <td style="border:1px solid #999;padding:6px 8px;background:#f1ede2;font-weight:bold;width:14%;">Bobot</td>
+      </tr>
+      <tr><td style="border:1px solid #999;padding:6px 8px;">Kesesuaian Pesanan</td><td style="border:1px solid #999;padding:6px 8px;">Produk/jasa sesuai spesifikasi dan kebutuhan yang diminta pelanggan/mitra</td><td style="border:1px solid #999;padding:6px 8px;">25%</td></tr>
+      <tr><td style="border:1px solid #999;padding:6px 8px;">Kualitas Teknis &amp; Estetika</td><td style="border:1px solid #999;padding:6px 8px;">Ketepatan teknik pengerjaan dan nilai estetika sesuai standar kejuruan</td><td style="border:1px solid #999;padding:6px 8px;">25%</td></tr>
+      <tr><td style="border:1px solid #999;padding:6px 8px;">Ketepatan Waktu</td><td style="border:1px solid #999;padding:6px 8px;">Produk/jasa diselesaikan dan diserahkan sesuai tenggat yang disepakati</td><td style="border:1px solid #999;padding:6px 8px;">20%</td></tr>
+      <tr><td style="border:1px solid #999;padding:6px 8px;">Kreativitas &amp; Inovasi</td><td style="border:1px solid #999;padding:6px 8px;">Terdapat nilai tambah, ide orisinal, atau penyelesaian masalah kreatif</td><td style="border:1px solid #999;padding:6px 8px;">15%</td></tr>
+      <tr><td style="border:1px solid #999;padding:6px 8px;">Kepuasan Pelanggan</td><td style="border:1px solid #999;padding:6px 8px;">Umpan balik positif dari mitra/pelanggan terhadap hasil akhir</td><td style="border:1px solid #999;padding:6px 8px;">15%</td></tr>
+    </table>
+
+    <h2>E. Pengayaan dan Remedial</h2>
+    <h3>1. Pengayaan</h3>
+    <p>${esc(state.pengayaan)}</p>
+    <h3>2. Remedial</h3>
+    <p>${esc(state.remedial)}</p>
+
+    <h2>F. Lampiran</h2>
+    <p>${esc(state.lampiran)}</p>
+
+    <table style="width:100%;border:none;margin-top:40px;">
+      <tr>
+        <td style="border:none;width:50%;"></td>
+        <td style="border:none;width:50%;text-align:center;">
+          <p style="margin:0;">Surabaya, ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
+          <p style="margin:0;">Guru Mata Pelajaran,</p>
+          <p style="margin:70px 0 0 0;text-decoration:underline;font-weight:bold;">${esc(state.namaGuru)||'.....................................'}</p>
+          <p style="margin:0;">NIP. ${esc(state.nip)||'.....................................'}</p>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+  </body>
+  </html>`;
+
+  const blob = new Blob(['\ufeff', html], {type: 'application/msword'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const fileMapel = (state.mapel || (j?j.nama:'Modul')).replace(/[^a-z0-9]+/gi,'_');
+  a.href = url;
+  a.download = `Modul_Ajar_TEFA_${fileMapel}_${state.kelas}.doc`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Modul ajar berhasil diunduh ✓');
+}
+
+/* init */
+render();
+</script>
+</body>
+</html>
